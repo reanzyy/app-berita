@@ -56,18 +56,20 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'news_content' => 'required|min:10',
             'category_id' => 'required',
-            'image' => 'required|image',
+            'image' => 'image',
         ]);
-
-        $image = time() . '.' . $request->image->extension();
-        $request->image->move(public_path("images"), $image);
 
         $id = Auth::user()->id;
         $posts = new Post;
 
+        if ($request->hasFile('image')) {
+            $image = time() . '.' . $request->image->extension();
+            $request->image->move(public_path("images"), $image);
+            $posts->image = $image;
+        }
+
         $posts->author = $id;
         $posts->title = $request->title;
-        $posts->image = $image;
         $posts->news_content = $request->news_content;
         $posts->category_id = $request->category_id;
         $posts->save();
@@ -90,7 +92,7 @@ class PostController extends Controller
             ->join('posts', 'comments.post_id', '=', 'posts.id')
             ->join('users', 'comments.user_id', '=', 'users.id')
             ->where('comments.post_id', $id)
-            ->orderBy('comments.id', 'desc')
+            ->orderBy('comments.id', 'asc')
             ->get();
 
         return view('pages.posts.show', compact('post', 'comments'));
@@ -101,7 +103,12 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post = Post::find($id)
+            ->first();
+
+        $categories = Category::all();
+
+        return view('pages.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -109,7 +116,27 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'news_content' => 'required|min:10',
+            'category_id' => 'required',
+            'image' => 'image',
+        ]);
+
+        $posts = Post::find($id);
+
+        if ($request->hasFile('image')) {
+            $image = time() . '.' . $request->image->extension();
+            $request->image->move(public_path("images"), $image);
+            $posts->image = $image;
+        }
+
+        $posts->title = $request->title;
+        $posts->news_content = $request->news_content;
+        $posts->category_id = $request->category_id;
+        $posts->save();
+
+        return redirect('/my-posts');
     }
 
     /**
@@ -117,6 +144,9 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::find($id)->first();
+        $post->delete();
+
+        return redirect('/my-posts');
     }
 }

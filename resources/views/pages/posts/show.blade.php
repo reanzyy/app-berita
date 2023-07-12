@@ -19,13 +19,12 @@
                             <img class="my-5 rounded-md h-auto w-10/12" src="{{ asset('images/' . $item->image) }}"
                                 alt="">
                         </div>
-                        <p class="leading-tight mt-3">{{ $item->news_content }}</p>
+                        <p class="leading-tight mt-3">{!! $item->news_content !!}</p>
                     </div>
                 </div>
-                </a>
             @endforeach
         </div>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto Psm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg lg:mt-5">
                 <div class="p-6 text-gray-900">
                     <h1 class="text-2xl font-bold my-3 hover:underline"><span class="hover:text-slate-500">#</span>
@@ -53,12 +52,33 @@
                     @endauth
 
                     @foreach ($comments as $comment)
-                        <div class="my-5">
-                            <div class="font-semibold text-gray-500">{{ $comment->name }}</div>
-                            <div class="text-xs text-gray-500">
-                                {{ date_format(DateTime::createFromFormat('Y-m-d H:i:s', $comment->created_at), 'd M Y H:i') }}
+                        <div class="my-5 border shadow rounded-lg">
+                            <div class="relative">
+                                <button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider"
+                                    class="text-black absolute top-0 right-0 m-2 p-2"type="button"><i
+                                        class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <!-- Dropdown menu -->
+                                <div id="dropdownDivider"
+                                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow border w-44">
+                                    <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDividerButton">
+                                        <li>
+                                            <a href="" class="block px-4 py-2 hover:bg-gray-100">Edit</a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="block px-4 py-2 hover:bg-gray-100">Delete</a>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="">{{ $comment->comments_content }}</div>
+                            <div class="p-5">
+                                <div class="font-semibold text-gray-500">{{ $comment->name }}</div>
+                                <div class="text-xs text-gray-500">
+                                    {{ date_format(DateTime::createFromFormat('Y-m-d H:i:s', $comment->created_at), 'd M Y H:i') }}
+                                </div>
+                                <p class="leading-tight">{{ $comment->comments_content }}</p>
+                            </div>
                         </div>
                     @endforeach
                 </div>

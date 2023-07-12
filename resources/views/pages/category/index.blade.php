@@ -35,10 +35,16 @@
                                     {{ $category->category }}
                                 </th>
                                 <td class="px-6 py-4">
-                                    <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
-                                    <a href="#" class="font-medium text-blue-600 hover:underline">Delete</a>
+                                    <a href="{{ route('categories.edit', $category->id) }}"
+                                        class="font-medium text-blue-600 hover:underline">Edit</a>
+                                    <button data-modal-target="delete{{ $category->id }}"
+                                        data-modal-toggle="delete{{ $category->id }}"
+                                        class="font-medium text-blue-600 hover:underline" type="button">
+                                        Delete
+                                    </button>
                                 </td>
                             </tr>
+                            @include('pages.category.delete')
                         @endforeach
                     </tbody>
                 </table>
