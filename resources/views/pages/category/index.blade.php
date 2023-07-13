@@ -34,7 +34,7 @@
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                     {{ $category->category }}
                                 </th>
-                                <td class="px-6 py-4">
+                                <td class="flex gap-2 px-6 py-4">
                                     <a href="{{ route('categories.edit', $category->id) }}"
                                         class="font-medium text-blue-600 hover:underline">Edit</a>
                                     <button data-modal-target="delete{{ $category->id }}"
@@ -42,6 +42,14 @@
                                         class="font-medium text-blue-600 hover:underline" type="button">
                                         Delete
                                     </button>
+                                    {{-- <form action="{{ route('categories.delete', $category->id) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button data-modal-hide="delete{{ $category->id }}" type="submit"
+                                            class="font-medium text-blue-600 hover:underline">
+                                            Delete
+                                        </button> --}}
+                                    </form>
                                 </td>
                             </tr>
                             @include('pages.category.delete')

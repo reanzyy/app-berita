@@ -37,6 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/post/{id}/delete', [PostController::class, 'destroy'])->name('posts.delete')->middleware('post.owner');
 
     Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.store');
+    Route::get('/comment/{id}/edit', [CommentController::class, 'edit'])->name('comment.edit')->middleware('comment.owner');
+    Route::patch('/comment/{id}/update', [CommentController::class, 'update'])->name('comment.update')->middleware('comment.owner');
+    Route::delete('/comment/{id}/delete', [CommentController::class, 'destroy'])->name('comment.delete')->middleware('comment.owner');
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');

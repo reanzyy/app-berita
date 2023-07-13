@@ -20,7 +20,7 @@ class CommentOwner
         $comment = Comment::findOrFail($request->id);
 
         if ($comment->user_id != $user->id) {
-            return view(['message' => 'Data Not Found'], 404);
+            return redirect(route('posts.detail', $comment->post_id));
         }
 
         return $next($request);

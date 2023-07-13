@@ -27,4 +27,35 @@ class CommentController extends Controller
 
         return back();
     }
+
+    public function edit(string $id)
+    {
+        $comment = Comment::find($id);
+
+        return view('pages.comments.edit', compact('comment'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'comments_content' => 'required',
+        ]);
+
+        // Memanggil postingan berdasarkan ID
+
+        $comment = Comment::find($id);
+
+        $comment->comments_content = $request->comments_content;
+        $comment->save();
+
+        return redirect(route('posts.detail', $comment->post_id));
+    }
+
+    public function destroy($id)
+    {
+        $comment = Comment::find($id);
+        $comment->delete();
+
+        return redirect(route('posts.detail', $comment->post_id));
+    }
 }

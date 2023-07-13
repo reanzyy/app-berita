@@ -103,8 +103,7 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        $post = Post::find($id)
-            ->first();
+        $post = Post::find($id);
 
         $categories = Category::all();
 
@@ -144,7 +143,7 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        $post = Post::find($id)->first();
+        $post = Post::find($id);
         $post->delete();
 
         return redirect('/my-posts');

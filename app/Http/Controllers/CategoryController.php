@@ -58,7 +58,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
 
-        $categories = Category::find($id)->first();
+        $categories = Category::find($id);
         $categories->delete();
 
         return redirect()->route('categories');

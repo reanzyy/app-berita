@@ -53,25 +53,39 @@
 
                     @foreach ($comments as $comment)
                         <div class="my-5 border shadow rounded-lg">
-                            <div class="relative">
-                                <button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider"
-                                    class="text-black absolute top-0 right-0 m-2 p-2"type="button"><i
-                                        class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <!-- Dropdown menu -->
-                                <div id="dropdownDivider"
-                                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow border w-44">
-                                    <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDividerButton">
-                                        <li>
-                                            <a href="" class="block px-4 py-2 hover:bg-gray-100">Edit</a>
-                                        </li>
-                                        <li>
-                                            <a href="" class="block px-4 py-2 hover:bg-gray-100">Delete</a>
+                            @if (Auth::user()->id == $comment->user_id)
+                                <div class="relative">
+                                    <div class="text-black absolute top-0 right-0 m-2 p-2">
+                                        <div class="flex gap-2">
+                                            {{-- <button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider"
+                                        class="text-black absolute top-0 right-0 m-2 p-2"type="button"><i
+                                            class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button> --}}
+                                            <!-- Dropdown menu -->
+                                            {{-- <div id="dropdownDivider" --}}
+                                            {{-- class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow border w-44"> --}}
+                                            {{-- <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDividerButton"> --}}
+                                            {{-- <li> --}}
+                                            <a href="{{ route('comment.edit', $comment->id) }}"
+                                                class="font-medium text-blue-600 hover:underline">Edit</a>
+                                            {{-- </li> --}}
+                                            {{-- <li> --}}
+                                            {{-- <a href="{{ route('posts.edit', $post->id) }}" class="">Delete</a> --}}
+                                            <button data-modal-target="popup-modal{{ $comment->id }}"
+                                                data-modal-toggle="popup-modal{{ $comment->id }}"
+                                                class="font-medium text-blue-600 hover:underline" type="button">
+                                                Delete
                                             </button>
-                                        </li>
-                                    </ul>
+
+                                            {{-- </li> --}}
+                                            {{-- </ul> --}}
+                                            {{-- </div> --}}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                @include('pages.comments.delete')
+                            @else
+                            @endif
                             <div class="p-5">
                                 <div class="font-semibold text-gray-500">{{ $comment->name }}</div>
                                 <div class="text-xs text-gray-500">

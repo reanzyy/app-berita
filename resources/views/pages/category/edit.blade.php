@@ -22,7 +22,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <x-primary-button type="submit">Add Post</x-primary-button>
+                            <x-primary-button type="submit">Edit Post</x-primary-button>
                         </div>
                     </form>
                 </div>
